@@ -5,18 +5,19 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
-  const { push } = useRouter();
+  const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    push(`/prediction/${inputValue}`);
+    if(!inputValue.trim()) return;
+    router.push(`/prediction/${inputValue}`);
   }
   return (
     <div>
       <div>
         <h1>Enter Your Name</h1>
       </div>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <input 
           type="text" 
           placeholder="Type Your Name..."  
