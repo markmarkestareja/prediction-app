@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const getPredictedAge = async (name:string) => {
   const res = await fetch(`https://api.agify.io?name=${name}`);
   return res.json();
@@ -28,14 +30,19 @@ export default async function Page({ params }: PageProps){
 
   const [age, gender, country] = await Promise.all([agedata, genderdata, countrydata])
   return(
-    <div className="text-blue-900">
+    <div className="w-auto flex flex-col gap-12 items-center bg-light-color rounded-xl p-9 drop-shadow-lg">
       <div>
-        <div>Personal Info</div>
-        <div>Name: {decodedName}</div>
-        <div>Age: {age?.age}</div>
-        <div>Gender: {gender?.gender}</div>
-        <div>Country: {country?.[0]?.country_id}</div>
+        <h1 className="text-dark-color font-black text-2xl md:text-4xl lg:text-6xl whitespace-nowrap">Personal Info</h1>
       </div>
+      <div className="flex flex-col gap-6 w-full">
+        <div>Name: <span className="font-bold">{decodedName}</span></div>
+        <div>Age: <span className="font-bold">{age?.age}</span></div>
+        <div>Gender: <span className="font-bold">{gender?.gender}</span></div>
+        <div>Country: <span className="font-bold">{country?.country?.[0]?.country_id}</span></div>
+      </div>
+      <Link href="/">
+        <button type="button" className="bg-dark-color py-4 px-12 text-lighter-color text-lg md:text-2xl lg:text-3xl rounded w-auto">Predict Again</button>
+      </Link>
     </div>
   )
 }
